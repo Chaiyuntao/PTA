@@ -4,8 +4,7 @@
 #include <map> 
 using namespace std;
 int fun(int i, int a){
-	if( i > a) return i - a; 
-	else return a - i;
+	return i>a ? i-a : a-i;
 }
 
 struct cmp{
@@ -13,7 +12,6 @@ struct cmp{
 	return a > b; 
 	}	
 };
-
 	
 int main(int argc, char** argv) {
 	int N;
@@ -26,9 +24,9 @@ int main(int argc, char** argv) {
 	for(int i = 0; i < vec.size(); i++){
 		vec[i] = fun(i + 1,vec[i]);
 	}
-//	for(auto it: vec)
-//		cout << it <<" ";
-//	cout << endl;
+	
+
+	cout << "MAP 计算器" << endl;
 	//map计数器 O = N*logN
 	map<int,int,cmp> m;
 	for(auto it:vec)
@@ -37,5 +35,16 @@ int main(int argc, char** argv) {
 		if(it.second > 1)
 			cout << it.first << " " << it.second<<endl;
 	} 
+
+	// hash 映射 O = N
+	cout << "开辟一个数组 hash映射" <<endl;
+	vector<int> h(N);
+	for(auto it:vec){
+		h[it]++;
+	}
+	for(int i = N -1 ; i >= 0;i--){
+		if(h[i] > 1)
+			cout << i << " " << h[i] << endl;
+	}
 	return 0;
 }
