@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 //	for(auto it: vec)
 //		cout << it <<" ";
 //	cout << endl;
-	//map¼ÆÊýÆ÷ O = N*logN
+	//mapè®¡æ•°å™¨ O = N*logN
 	map<int,int,cmp> m;
 	for(auto it:vec)
 		m[it]++; 
