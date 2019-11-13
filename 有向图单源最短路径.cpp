@@ -1,9 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <map>
 using namespace std;
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
 struct node{
 	int V;
 	int weight;
@@ -15,17 +13,15 @@ struct node_1{
 }node1;
 int findmin(map<int,struct node_1> &S){
 	int temp = 1000;int V = 1000;
-	for(auto it: S){
+	for(auto it: S)
 		if(it.second.mark == 0 && it.second.dist < temp){
 				temp = 	it.second.dist;	
 				V = it.first;				
 			}
-		}		
-	}
 	return V;
 }
 void dijkstr(vector<vector<struct node>> &G,int V,map<int,struct node_1> &S,vector<bool> &visi){
-	//ÕÒµ½×îĞ¡Öµ 
+	//æ‰¾åˆ°æœ€å°å€¼ 
 	int cur_V;
 	while(1){
 		cur_V = findmin(S);
@@ -33,17 +29,17 @@ void dijkstr(vector<vector<struct node>> &G,int V,map<int,struct node_1> &S,vect
 		cout << "cur_v:" << cur_V;
 		auto cur_search = S.find(cur_V);
 			cur_search->second.mark = 1;
-		//±éÀú V µÄÁÙ½çµã 
+		//éå† V çš„ä¸´ç•Œç‚¹ 
 		for(int i = 0;i< G[cur_V].size();i++){
 			int next_V = G[cur_V][i].V;					 		
 			auto next_search = S.find(next_V);
-			//SÖĞ²»´æÔÚ V µÚÒ»´Î²åÈë
+			//Sä¸­ä¸å­˜åœ¨ V ç¬¬ä¸€æ¬¡æ’å…¥
 	    	if (next_search == S.end())
-	    	//dist = ÉÏÒ»¸ö½ÚµãµÄ dist + Õâ¸ö½ÚµãµÄÈ¨Öµ £¬path¼ÇÂ¼ÉÏÒ»¸ö½Úµã£¬mark²»±ê¼Ç 
+	    	//dist = ä¸Šä¸€ä¸ªèŠ‚ç‚¹çš„ dist + è¿™ä¸ªèŠ‚ç‚¹çš„æƒå€¼ ï¼Œpathè®°å½•ä¸Šä¸€ä¸ªèŠ‚ç‚¹ï¼Œmarkä¸æ ‡è®° 
 				S[next_V] = {G[cur_V][i].weight + cur_search->second.dist,cur_V,0};
-			//SÖĞ´æÔÚV ÅĞ¶ÏÊÇ·ñÎª×î¶ÌÂ·¾¶ 
+			//Sä¸­å­˜åœ¨V åˆ¤æ–­æ˜¯å¦ä¸ºæœ€çŸ­è·¯å¾„ 
 			else{
-				//Èç¹û ĞÂµÄÂ·¾¶dist < Ö®Ç°µÄdist£¬¸üĞÂ dist £¬ºÍpath£¬mark±£³Ö²»±ä 
+				//å¦‚æœ æ–°çš„è·¯å¾„dist < ä¹‹å‰çš„distï¼Œæ›´æ–° dist ï¼Œå’Œpathï¼Œmarkä¿æŒä¸å˜ 
 				 if( G[cur_V][i].weight + cur_search->second.dist < next_search->second.dist ) 
 				 	S[next_V] = {G[cur_V][i].weight + cur_search->second.dist,cur_V, 0};
 			} 
@@ -61,14 +57,14 @@ int main(int argc, char** argv) {
 	vector<int> dis(V,-1);
 	vector<int> path(V,-1);
 	map<int,struct node_1> S;
-	//ÎŞÏòÍ¼ 
+	//æ— å‘å›¾ 
 	for(int i = 0;i < E;i++){
 		int v1,v2,weight;
 		cin >> v1 >> v2 >> weight;
 		G[v1].push_back({v2,weight});
 	}	
-	//ÓĞÈ¨Í¼µÄµ¥Ô´×î¶ÌÂ·£¬ÒÔ0ÎªÆğµã 
-	//³õÊ¼»¯S ¾àÀë Â·¾¶ ±ê¼Ç 
+	//æœ‰æƒå›¾çš„å•æºæœ€çŸ­è·¯ï¼Œä»¥0ä¸ºèµ·ç‚¹ 
+	//åˆå§‹åŒ–S è·ç¦» è·¯å¾„ æ ‡è®° 
 	S[0] ={0,-1,1};
 	for(int i = 0;i<G[0].size();i++){
 		S[G[0][i].V] = {G[0][i].weight,0,0};
